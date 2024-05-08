@@ -1,10 +1,7 @@
 import { MongoClient } from "mongodb"
 
 export default async (req, res) => {
-  const client = new MongoClient(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  const client = new MongoClient(process.env.MONGODB_URI)
   const task = {
     text: req.body.text,
     completed: false,

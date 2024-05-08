@@ -27,6 +27,7 @@ function TodoList() {
         type="text"
         value={newTask}
         onChange={e => setNewTask(e.target.value)}
+        style={{ border: "1px solid black" }}
       />
       <button onClick={addTask}>Add Task</button>
       <ul>
