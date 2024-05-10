@@ -5,6 +5,7 @@ export default async (req, res) => {
   const task = {
     text: req.body.text,
     completed: false,
+    userId: req.body.userId, // Store the user ID with the task
   }
   try {
     await client.connect()
