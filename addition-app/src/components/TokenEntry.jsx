@@ -1,26 +1,8 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import axios from "axios"
 
-function TokenSystem() {
-  const [tokens, setTokens] = useState([])
+function TokenEntry() {
   const [newToken, setNewToken] = useState("")
-
-  const fetchTokens = async () => {
-    try {
-      const { data } = await axios.get("/api/getTokens")
-      if (Array.isArray(data)) {
-        setTokens(data)
-      } else {
-        console.error("Expected an array but got:", data)
-      }
-    } catch (error) {
-      console.error("Error fetching tokens:", error)
-    }
-  }
-
-  useEffect(() => {
-    fetchTokens()
-  }, [])
 
   const addToken = async () => {
     if (!newToken) return
@@ -28,7 +10,6 @@ function TokenSystem() {
       const tokensArray = newToken.split(" ").map(Number)
       await axios.post("/api/addTokens", { tokens: tokensArray })
       setNewToken("")
-      fetchTokens()
     } catch (error) {
       console.error("Error adding token:", error)
     }
@@ -40,17 +21,6 @@ function TokenSystem() {
 
   return (
     <div className="h-full w-full p-2 flex flex-col items-center content-center">
-      <ul className="self-start">
-        {Array.isArray(tokens) &&
-          tokens.map((token, index) => (
-            <li key={index}>
-              <div className="flex items-center gap-2 border-s-[3px] border-transparent px-4 py-3 text-gray-500 hover:border-gray-100 hover:bg-gray-50 hover:text-gray-700">
-                <span className="text-sm font-medium">Token No: {token}</span>
-              </div>
-            </li>
-          ))}
-      </ul>
-
       <div className="absolute bottom-1 w-full p-6">
         <div className="overflow-hidden rounded-lg">
           <textarea
@@ -86,4 +56,4 @@ function TokenSystem() {
   )
 }
 
-export default TokenSystem
+export default TokenEntry
